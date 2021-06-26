@@ -17,7 +17,21 @@ const unmarshallOptions = {
     wrapNumbers: false, // false, by default.
 };
 
+//Jest test Config
+const config = {
+  convertEmptyValues: true,
+  ...(process.env.MOCK_DYNAMODB_ENDPOINT && {
+    endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
+    sslEnabled: false,
+    region: "local",
+  }),
+};
+
 const translateConfig = { marshallOptions, unmarshallOptions };
+const ddbTest:DynamoDBClient = new DynamoDBClient(config);
+const ddbDocTest:DynamoDBDocumentClient = DynamoDBDocumentClient.from(ddbTest, translateConfig);
 const ddbDoc = DynamoDBDocumentClient.from(ddb, translateConfig);
 
-export {ddb, ddbDoc};
+
+
+export {ddbDocTest, ddbDoc};
