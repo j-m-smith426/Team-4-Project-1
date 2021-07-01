@@ -1,43 +1,40 @@
-import User, { IUser } from '@entities/User';
+import Comment, { IComment} from '@entities/Post';
 import { getRandomInt } from '@shared/functions';
-import { IUserDao } from './UserDao';
+import { IPostDao } from './PostDao';
 import MockDaoMock from '../MockDb/MockDao.mock';
 import { DeleteCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import { ddbDoc } from '@daos/DB/Dynamo';
 
 
 const TABLE = "Scouter";
-class UserDao implements IUserDao {
+class PostDao implements IPostDao {
     public table = TABLE;
 
-    /*public async getOne(email: string): Promise<IUser | null> {
-        return null;
-    }*/
-
-
-    public async getAll() {
+    public async getAllComments(subjectID:string) {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "begins_with(TYPEID, :utag)",
+            KeyConditionExpression: "TYPEID = :subject",
             ExpressionAttributeValues: {
-                ":utag": "U#"
+                ":subject": subjectID
               }
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
             console.log("Success :", data.Items);
-            return Promise.resolve(data.Items);
+            const regex = /#C#/g;
+            const items = data.Items?.filter(i => i.REFERENCE.match(regex))
+            return Promise.resolve(items);
         } catch (err) {
             console.log("Error", err);
         }
     }
 
 
-    public async add(user: IUser): Promise<void> {
-        console.log(user);
+    public async addComment(post: IComment): Promise<void> {
+        console.log(post);
         const params = {
             TableName: this.table,
-            Item: user
+            Item: post
         }
         await ddbDoc.send(new PutCommand(params));
     }
@@ -69,4 +66,4 @@ class UserDao implements IUserDao {
     }*/
 }
 
-export default UserDao;
+export default PostDao;

@@ -1,26 +1,42 @@
 export interface IUser {
-    id: number;
-    name: string;
+    TYPEID: string;
+    REFERENCE: string;
+    username: string;
     email: string;
+    
 }
 
 class User implements IUser {
 
-    public id: number;
-    public name: string;
+    public TYPEID: string;
+    public username: string;
     public email: string;
+    public REFERENCE: string;
+    constructor(id: string, email: string, name: string) {
+            this.username = name;
+            this.email = email;
+            if(id.startsWith("U#")){
+                this.TYPEID = id;
+            } else if (id.includes("#")) {
+                this.TYPEID = "#";
+            } else {
+                this.TYPEID = "U#" +id;
+            }
+            this.REFERENCE = "0";
 
-    constructor(nameOrUser: string | IUser, email?: string, id?: number) {
-        if (typeof nameOrUser === 'string') {
-            this.name = nameOrUser;
-            this.email = email || '';
-            this.id = id || -1;
-        } else {
-            this.name = nameOrUser.name;
-            this.email = nameOrUser.email;
-            this.id = nameOrUser.id;
-        }
     }
+    public normalize(u : IUser) {
+        if(u.TYPEID.startsWith("U#")){
+            u.TYPEID = u.TYPEID;
+        } else if (u.TYPEID.includes("#")) {
+            this.TYPEID = "#";
+        } else {
+            u.TYPEID = "U#" + u.TYPEID;
+        }
+        u.REFERENCE = "0"; 
+        return u;
+    }
+    
 }
 
 export default User;

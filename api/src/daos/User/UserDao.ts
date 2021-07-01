@@ -3,11 +3,11 @@ import { IUser } from '@entities/User';
 
 
 export interface IUserDao {
-    getOne: (email: string) => Promise<IUser | null>;
-    getAll: () => Promise<IUser[]>;
+    //getOne: (email: string) => Promise<IUser | null>;
+    getAll: () => Promise<any>;
     add: (user: IUser) => Promise<void>;
-    update: (user: IUser) => Promise<void>;
-    delete: (id: number) => Promise<void>;
+    //update: (user: IUser) => Promise<void>;
+    //delete: (id: number) => Promise<void>;
 }
 
 class UserDao implements IUserDao {
