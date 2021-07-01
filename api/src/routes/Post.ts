@@ -1,11 +1,11 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 
-import UserDao from '@daos/User/UserDao.mock';
+import PostDao from '@daos/Post/PostDao.mock';
 import { badIDError, paramMissingError } from '@shared/constants';
-import User from '@entities/User';
+import Comment from '@entities/Post';
 
-const userDao = new UserDao();
+const postDao = new PostDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
 
@@ -17,8 +17,9 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @param res 
  * @returns 
  */
-export async function getAllUsers(req: Request, res: Response) {
-    const users = await userDao.getAll();
+export async function getAllComments(req: Request, res: Response) {
+    const { subject } = req.params;
+    const users = await postDao.getAllComments(subject);
     return res.status(OK).json({users});
 }
 
@@ -30,17 +31,17 @@ export async function getAllUsers(req: Request, res: Response) {
  * @param res 
  * @returns 
  */
-export async function addOneUser(req: Request, res: Response) {
+export async function addOneComment(req: Request, res: Response) {
     console.log(req.body);
-    let{ user } = req.body;
-    console.log(user);
-    user = User.prototype.normalize(user);
-    if (!user || user.TYPEID === "#") {
+    let{ comment } = req.body;
+    console.log(comment);
+    comment = Comment.prototype.normalize(comment);
+    if (!comment || comment.TYPEID === "#") {
         return res.status(BAD_REQUEST).json({
             error: badIDError,
         });
     }
-    await userDao.add(user);
+    await postDao.addComment(comment);
     return res.status(CREATED).end();
 }
 

@@ -1,13 +1,13 @@
-import User, { IUser } from '@entities/User';
+
 import { getRandomInt } from '@shared/functions';
-import { IUserDao } from './UserDao';
-import MockDaoMock from '../MockDb/MockDao.mock';
+import { IAnimeDao } from './AnimeDao';
 import { DeleteCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import { ddbDoc } from '@daos/DB/Dynamo';
+import { IAnime } from '@entities/Anime';
 
 
 const TABLE = "Scouter";
-class UserDao implements IUserDao {
+class AnimeDao implements IAnimeDao {
     public table = TABLE;
 
     /*public async getOne(email: string): Promise<IUser | null> {
@@ -18,9 +18,9 @@ class UserDao implements IUserDao {
     public async getAll() {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "begins_with(TYPEID, :utag)",
+            KeyConditionExpression: "begins_with(TYPEID, :atag)",
             ExpressionAttributeValues: {
-                ":utag": "U#"
+                ":utag": "A#"
               }
         };
         try {
@@ -33,11 +33,11 @@ class UserDao implements IUserDao {
     }
 
 
-    public async add(user: IUser): Promise<void> {
-        console.log(user);
+    public async add(anime: IAnime): Promise<void> {
+        console.log(anime);
         const params = {
             TableName: this.table,
-            Item: user
+            Item: anime
         }
         await ddbDoc.send(new PutCommand(params));
     }
@@ -69,4 +69,4 @@ class UserDao implements IUserDao {
     }*/
 }
 
-export default UserDao;
+export default AnimeDao;

@@ -1,11 +1,10 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
+import { badIDError } from '@shared/constants';
+import Anime from '@entities/Anime';
+import AnimeDao from '@daos/Anime/AnimeDao.mock';
 
-import UserDao from '@daos/User/UserDao.mock';
-import { badIDError, paramMissingError } from '@shared/constants';
-import User from '@entities/User';
-
-const userDao = new UserDao();
+const animeDao = new AnimeDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
 
@@ -17,9 +16,9 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @param res 
  * @returns 
  */
-export async function getAllUsers(req: Request, res: Response) {
-    const users = await userDao.getAll();
-    return res.status(OK).json({users});
+export async function getAllAnime(req: Request, res: Response) {
+    const anime = await animeDao.getAll();
+    return res.status(OK).json({anime});
 }
 
 
@@ -30,17 +29,17 @@ export async function getAllUsers(req: Request, res: Response) {
  * @param res 
  * @returns 
  */
-export async function addOneUser(req: Request, res: Response) {
+export async function addOneAnime(req: Request, res: Response) {
     console.log(req.body);
-    let{ user } = req.body;
-    console.log(user);
-    user = User.prototype.normalize(user);
-    if (!user || user.TYPEID === "#") {
+    let{ anime } = req.body;
+    console.log(anime);
+    anime = Anime.prototype.normalize(anime);
+    if (!anime || anime.TYPEID === "#") {
         return res.status(BAD_REQUEST).json({
             error: badIDError,
         });
     }
-    await userDao.add(user);
+    await animeDao.add(anime);
     return res.status(CREATED).end();
 }
 
