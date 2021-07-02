@@ -11,7 +11,7 @@ class Comment implements IComment {
     public content: string;
     public REFERENCE: string;
     constructor(id: string, content: string, parent: string) {
-        if(id.startsWith("A#" || "U#")){
+        if(id.startsWith("U#") || id.startsWith("A#")){
             this.TYPEID = id;
         } else {
             this.TYPEID = "#";
@@ -21,7 +21,7 @@ class Comment implements IComment {
 
     }
     public normalize(c : IComment) {
-        if(!(c.TYPEID.startsWith("A#" || "U#"))){
+        if(!(c.TYPEID.startsWith("U#") || c.TYPEID.startsWith("A#"))){
             c.TYPEID = "#";
         }
         return c;

@@ -1,9 +1,9 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 
-import PostDao from '@daos/Post/PostDao.mock';
-import { badIDError, paramMissingError } from '@shared/constants';
-import Comment from '@entities/Post';
+import PostDao from '../daos/Post/PostDao.mock';
+import { badIDError, paramMissingError } from '../shared/constants';
+import Comment from '../entities/Post'
 
 const postDao = new PostDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;

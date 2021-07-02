@@ -2,17 +2,35 @@ import User, { IUser } from '@entities/User';
 import { getRandomInt } from '@shared/functions';
 import { IUserDao } from './UserDao';
 import MockDaoMock from '../MockDb/MockDao.mock';
-import { DeleteCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { ddbDoc } from '@daos/DB/Dynamo';
+import { DeleteCommand, GetCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { ddbDoc } from '../DB/Dynamo';
+
 
 
 const TABLE = "Scouter";
 class UserDao implements IUserDao {
     public table = TABLE;
 
-    /*public async getOne(email: string): Promise<IUser | null> {
+    public async getOne(username: string): Promise<IUser | null> {
+
+        const params = {
+            TableName: TABLE,
+            Key:{
+                TYPEID:'U#'+username,
+                REFERENCE:"0",
+            },
+        };
+        try {
+            const data = await ddbDoc.send(new GetCommand(params));
+            console.log("Success :", data.Item);
+           
+            return data.Item as IUser;
+          } catch (err) {
+            console.log("Error", err);
+          }
+
         return null;
-    }*/
+    }
 
 
     public async getAll() {
@@ -25,7 +43,6 @@ class UserDao implements IUserDao {
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
-            console.log("Success :", data.Items);
             return Promise.resolve(data.Items);
         } catch (err) {
             console.log("Error", err);

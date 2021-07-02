@@ -17,8 +17,8 @@ const unmarshallOptions = {
     wrapNumbers: false, // false, by default.
 };
 
-//Jest test Config
-const config = {
+let ddbConfig = {...ddb.config.credentials,region: REGION};
+let jestConfig = {
   convertEmptyValues: true,
   ...(process.env.MOCK_DYNAMODB_ENDPOINT && {
     endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
@@ -27,11 +27,13 @@ const config = {
   }),
 };
 
+const config = jestConfig ? jestConfig:ddbConfig;
+
 const translateConfig = { marshallOptions, unmarshallOptions };
 const ddbTest:DynamoDBClient = new DynamoDBClient(config);
-const ddbDocTest:DynamoDBDocumentClient = DynamoDBDocumentClient.from(ddbTest, translateConfig);
-const ddbDoc = DynamoDBDocumentClient.from(ddb, translateConfig);
+const ddbDoc = DynamoDBDocumentClient.from(ddbTest, translateConfig);
+console.log(ddbTest);
 
 
 
-export {ddbDocTest, ddbDoc};
+export {ddbDoc};

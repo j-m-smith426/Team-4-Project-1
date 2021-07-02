@@ -3,7 +3,7 @@ import { getRandomInt } from '@shared/functions';
 import { IPostDao } from './PostDao';
 import MockDaoMock from '../MockDb/MockDao.mock';
 import { DeleteCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { ddbDoc } from '@daos/DB/Dynamo';
+import { ddbDoc } from '../DB/Dynamo';
 
 
 const TABLE = "Scouter";
@@ -13,17 +13,20 @@ class PostDao implements IPostDao {
     public async getAllComments(subjectID:string) {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "TYPEID = :subject",
+            FilterExpression: "TYPEID = :subject AND (contains(#ref,:p) OR contains(#ref, :c))",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
             ExpressionAttributeValues: {
-                ":subject": subjectID
+                ":subject": subjectID,
+                ":p":'#P#',
+                ":c":"#C#"
               }
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
-            console.log("Success :", data.Items);
-            const regex = /#C#/g;
-            const items = data.Items?.filter(i => i.REFERENCE.match(regex))
-            return Promise.resolve(items);
+            const items:IComment[] = data.Items as IComment[]
+            return items;
         } catch (err) {
             console.log("Error", err);
         }

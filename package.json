@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@jest-mock/express": "^1.4.2"
+  }
+}
