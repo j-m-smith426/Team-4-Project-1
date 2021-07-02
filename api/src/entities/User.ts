@@ -28,7 +28,7 @@ class User implements IUser {
     //Is this needed?
     public normalize(u : IUser) {
         if(u.TYPEID.startsWith("U#")){
-            
+            return u;
         } else if (u.TYPEID.includes("#")) {
             this.TYPEID = "#";
         } else {
