@@ -1,5 +1,5 @@
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { ddbDocTest } from "./Dynamo";
+import { ddbDoc } from "./Dynamo";
 
 export async function get(Id:string){
 const params = {
@@ -22,7 +22,7 @@ const params = {
 }
 
 try {
-    const data = await ddbDocTest.send(new GetCommand(params));
+    const data = await ddbDoc.send(new GetCommand(params));
     const item = data.Item;
     console.log("Success :", item);
     return item;
@@ -54,7 +54,7 @@ export async function add(ID:string) {
     };
 
     try {
-        const data = await ddbDocTest.send(new PutCommand(params));
+        const data = await ddbDoc.send(new PutCommand(params));
         console.log("Success - item added or updated", data);
         //return data;
       } catch (err) {

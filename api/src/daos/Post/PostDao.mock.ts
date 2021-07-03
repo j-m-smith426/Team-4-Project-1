@@ -3,27 +3,77 @@ import { getRandomInt } from '@shared/functions';
 import { IPostDao } from './PostDao';
 import MockDaoMock from '../MockDb/MockDao.mock';
 import { DeleteCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { ddbDoc } from '@daos/DB/Dynamo';
+import { ddbDoc } from '../DB/Dynamo';
 
 
 const TABLE = "Scouter";
 class PostDao implements IPostDao {
     public table = TABLE;
 
-    public async getAllComments(subjectID:string) {
+    public async getOne(postID:string) {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "TYPEID = :subject",
+            //Comments have either #P# or #C#
+            FilterExpression: "contains(#ref, :p) OR contains(#ref, :c)",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
             ExpressionAttributeValues: {
-                ":subject": subjectID
+                ":p":'#P#' + postID,
+                ":c":"#C#" + postID
+              }              
+    }
+    try {
+        const data = await ddbDoc.send(new ScanCommand(params));
+       
+        return data.Items && data.Items[0] as IComment;
+        
+    } catch (err) {
+        console.log("Error", err);
+    }
+}
+
+    public async getAllPostComments(postID:string){
+        const params = {
+            TableName: TABLE,
+            //Post comments have ParentPostID but not #P#ParentPostID and are not comments with #C#ParentPostID
+            FilterExpression: "contains(#ref, :i) AND NOT contains(#ref, :p) AND NOT contains(#ref, :c)",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
+            ExpressionAttributeValues: {
+                ":i": postID,
+                ":p":"#P#" + postID,
+                ":c":"#C#" + postID
+              }              
+    }
+    try {
+        const data = await ddbDoc.send(new ScanCommand(params));
+        
+        return data.Items && data.Items as IComment[];
+        
+    } catch (err) {
+        console.log("Error", err);
+    }
+}
+
+    public async getAllPageComments(subjectID:string) {
+        const params = {
+            TableName: TABLE,
+            FilterExpression: "TYPEID = :subject AND (contains(#ref,:p) OR contains(#ref, :c))",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
+            ExpressionAttributeValues: {
+                ":subject": subjectID,
+                ":p":'#P#',
+                ":c":"#C#"
               }
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
-            console.log("Success :", data.Items);
-            const regex = /#C#/g;
-            const items = data.Items?.filter(i => i.REFERENCE.match(regex))
-            return Promise.resolve(items);
+            return data.Items as IComment[];
+            
         } catch (err) {
             console.log("Error", err);
         }
@@ -31,7 +81,6 @@ class PostDao implements IPostDao {
 
 
     public async addComment(post: IComment): Promise<void> {
-        console.log(post);
         const params = {
             TableName: this.table,
             Item: post

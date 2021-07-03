@@ -3,7 +3,7 @@ import { IUser } from '@entities/User';
 
 
 export interface IUserDao {
-    //getOne: (email: string) => Promise<IUser | null>;
+    getOne: (email: string) => Promise<IUser | null>;
     getAll: () => Promise<any>;
     add: (user: IUser) => Promise<void>;
     //update: (user: IUser) => Promise<void>;

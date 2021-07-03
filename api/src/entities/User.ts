@@ -25,11 +25,12 @@ class User implements IUser {
             this.REFERENCE = "0";
 
     }
-    public normalize(u : IUser) {
+    
+    static normalize(u : IUser) {
         if(u.TYPEID.startsWith("U#")){
-            u.TYPEID = u.TYPEID;
+            return u;
         } else if (u.TYPEID.includes("#")) {
-            this.TYPEID = "#";
+            u.TYPEID = "#";
         } else {
             u.TYPEID = "U#" + u.TYPEID;
         }

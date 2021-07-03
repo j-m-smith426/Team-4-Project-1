@@ -25,13 +25,14 @@ class Anime implements IAnime {
         this.REFERENCE = "0"; 
 
     }
-    public normalize(a : IAnime) {
+    static normalize(a : IAnime) {
         if(a.TYPEID.startsWith("A#")){
-            this.TYPEID = a.TYPEID;
+            a.REFERENCE = "0";
+            return a;
         } else if (a.TYPEID.includes("#")) {
-            this.TYPEID = "#";
+            a.TYPEID = "#";
         } else {
-            this.TYPEID = "A#" + a.TYPEID;
+            a.TYPEID = "A#" + a.TYPEID;
         }
         a.REFERENCE = "0"; 
         return a;
