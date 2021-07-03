@@ -10,7 +10,54 @@ const TABLE = "Scouter";
 class PostDao implements IPostDao {
     public table = TABLE;
 
-    public async getAllComments(subjectID:string) {
+    public async getOne(postID:string) {
+        const params = {
+            TableName: TABLE,
+            //Comments have either #P# or #C#
+            FilterExpression: "contains(#ref, :p) OR contains(#ref, :c)",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
+            ExpressionAttributeValues: {
+                ":p":'#P#' + postID,
+                ":c":"#C#" + postID
+              }              
+    }
+    try {
+        const data = await ddbDoc.send(new ScanCommand(params));
+       
+        return data.Items && data.Items[0] as IComment;
+        
+    } catch (err) {
+        console.log("Error", err);
+    }
+}
+
+    public async getAllPostComments(postID:string){
+        const params = {
+            TableName: TABLE,
+            //Post comments have ParentPostID but not #P#ParentPostID and are not comments with #C#ParentPostID
+            FilterExpression: "contains(#ref, :i) AND NOT contains(#ref, :p) AND NOT contains(#ref, :c)",
+            ExpressionAttributeNames: {
+                "#ref": "REFERENCE",
+            },
+            ExpressionAttributeValues: {
+                ":i": postID,
+                ":p":"#P#" + postID,
+                ":c":"#C#" + postID
+              }              
+    }
+    try {
+        const data = await ddbDoc.send(new ScanCommand(params));
+        
+        return data.Items && data.Items as IComment[];
+        
+    } catch (err) {
+        console.log("Error", err);
+    }
+}
+
+    public async getAllPageComments(subjectID:string) {
         const params = {
             TableName: TABLE,
             FilterExpression: "TYPEID = :subject AND (contains(#ref,:p) OR contains(#ref, :c))",
@@ -25,8 +72,8 @@ class PostDao implements IPostDao {
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
-            const items:IComment[] = data.Items as IComment[]
-            return items;
+            return data.Items as IComment[];
+            
         } catch (err) {
             console.log("Error", err);
         }
@@ -34,7 +81,6 @@ class PostDao implements IPostDao {
 
 
     public async addComment(post: IComment): Promise<void> {
-        console.log(post);
         const params = {
             TableName: this.table,
             Item: post

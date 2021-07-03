@@ -1,6 +1,6 @@
 import Comment, {IComment} from "./Post";
 
-function createPost(){
+describe("The post entity should do the following", () =>{
     let id = 'testId';
     let ref = 'test#P#001';
     let user1:IComment = {
@@ -9,25 +9,22 @@ function createPost(){
         REFERENCE: ref
 
     };
-    test('Create Post with TYPEID:U#testID, content: This is a post, and REFERENCE: test#P#001', () => {
+    it('should create a Post with TYPEID:U#testID, content: This is a post, and REFERENCE: test#P#001', () => {
         let newPost:Comment = new Comment('U#'+id,'This is a post', ref);
         expect(newPost).toEqual(user1);
     })
-}
 
-function badPost(){
-    let id = 'testId';
-    let ref = 'test#P#001';
+
+    id = 'testId';
+    ref = 'test#P#001';
     let bad:IComment = {
         TYPEID:'#',
         content:'This is a post',
         REFERENCE: ref
 
     };
-    test('Create Bad Post with TYPEID:testID', () => {
+    it('should recognize a bad post formatted incorrectly', () => {
         let newPost:Comment = new Comment(id,'This is a post', ref);
-        expect(Comment.prototype.normalize(newPost)).toEqual(bad);
+        expect(Comment.normalize(newPost)).toEqual(bad);
     });
-}
-createPost();
-badPost();
+});

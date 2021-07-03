@@ -22,7 +22,7 @@ class UserDao implements IUserDao {
         };
         try {
             const data = await ddbDoc.send(new GetCommand(params));
-            console.log("Success :", data.Item);
+        
            
             return data.Item as IUser;
           } catch (err) {
@@ -51,7 +51,7 @@ class UserDao implements IUserDao {
 
 
     public async add(user: IUser): Promise<void> {
-        console.log(user);
+       
         const params = {
             TableName: this.table,
             Item: user

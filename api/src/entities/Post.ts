@@ -20,7 +20,7 @@ class Comment implements IComment {
         this.REFERENCE = parent; 
 
     }
-    public normalize(c : IComment) {
+    static normalize(c : IComment) {
         if(!(c.TYPEID.startsWith("U#") || c.TYPEID.startsWith("A#"))){
             c.TYPEID = "#";
         }

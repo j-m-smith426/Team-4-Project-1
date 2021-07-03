@@ -32,7 +32,7 @@ const config = jestConfig ? jestConfig:ddbConfig;
 const translateConfig = { marshallOptions, unmarshallOptions };
 const ddbTest:DynamoDBClient = new DynamoDBClient(config);
 const ddbDoc = DynamoDBDocumentClient.from(ddbTest, translateConfig);
-console.log(ddbTest);
+
 
 
 
