@@ -33,7 +33,7 @@ export async function addOneAnime(req: Request, res: Response) {
     console.log(req.body);
     let{ anime } = req.body;
     console.log(anime);
-    anime = Anime.prototype.normalize(anime);
+    anime = Anime.normalize(anime);
     if (!anime || anime.TYPEID === "#") {
         return res.status(BAD_REQUEST).json({
             error: badIDError,

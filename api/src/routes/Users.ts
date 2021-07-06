@@ -34,7 +34,7 @@ export async function addOneUser(req: Request, res: Response) {
     console.log(req.body);
     let{ user } = req.body;
     console.log(user);
-    user = User.prototype.normalize(user);
+    user = User.normalize(user);
     if (!user || user.TYPEID === "#") {
         return res.status(BAD_REQUEST).json({
             error: badIDError,

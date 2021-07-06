@@ -1,9 +1,9 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 
-import PostDao from '@daos/Post/PostDao.mock';
-import { badIDError, paramMissingError } from '@shared/constants';
-import Comment from '@entities/Post';
+import PostDao from '../daos/Post/PostDao.mock';
+import { badIDError, paramMissingError } from '../shared/constants';
+import Comment from '../entities/Post'
 
 const postDao = new PostDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
@@ -17,9 +17,32 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @param res 
  * @returns 
  */
-export async function getAllComments(req: Request, res: Response) {
+export async function getAllPageComments(req: Request, res: Response) {
     const { subject } = req.params;
-    const users = await postDao.getAllComments(subject);
+    
+    if(!subject){
+        return res.status(BAD_REQUEST).json({
+            error: paramMissingError,
+        });
+    }
+    const users = await postDao.getAllPageComments(subject);
+    return res.status(OK).json({users});
+}
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+export async function getAllPostComments(req: Request, res: Response) {
+    const { subject } = req.params;
+    
+    if(!subject){
+        return res.status(BAD_REQUEST).json({
+            error: paramMissingError,
+        });
+    }
+    const users = await postDao.getAllPostComments(subject);
     return res.status(OK).json({users});
 }
 
@@ -32,10 +55,10 @@ export async function getAllComments(req: Request, res: Response) {
  * @returns 
  */
 export async function addOneComment(req: Request, res: Response) {
-    console.log(req.body);
+    
     let{ comment } = req.body;
-    console.log(comment);
-    comment = Comment.prototype.normalize(comment);
+    
+    comment = Comment.normalize(comment);
     if (!comment || comment.TYPEID === "#") {
         return res.status(BAD_REQUEST).json({
             error: badIDError,

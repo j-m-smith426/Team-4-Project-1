@@ -1,5 +1,5 @@
-import {ddbDocTest} from './src/daos/DB/Dynamo'
+import {ddbDoc} from './src/daos/DB/Dynamo'
 
 afterAll(() => {
-    ddbDocTest.destroy();
+    ddbDoc.destroy();
   });

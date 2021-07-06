@@ -2,16 +2,34 @@ import { IComment } from '@entities/Post';
 
 
 
+
 export interface IPostDao {
-    //getOne: (email: string) => Promise<IUser | null>;
-    getAllComments: (subjectID:string) => Promise<any>;
+    getOne: (postID: string) => Promise<IComment|undefined>;
+    getAllPageComments: (subjectID:string) => Promise<any>;
+    getAllPostComments: (postID:string) => Promise<IComment[]|undefined>;
     addComment: (comment: IComment) => Promise<void>;
     //update: (user: IUser) => Promise<void>;
     //delete: (id: number) => Promise<void>;
 }
 
 class PostDao implements IPostDao {
-       /**
+    /**
+     * 
+     * @param postID 
+     * @returns 
+     */  
+    public async getOne(postID:string): Promise<IComment|undefined>{
+        //TODO
+        return Promise.resolve(undefined);
+    }
+    
+    public async getAllPostComments(postID:string) :Promise<IComment[]|undefined>{
+        //TODO
+        return Promise.resolve(undefined);
+    }
+    
+    
+    /**
      *
      * @param comment
      */
@@ -24,7 +42,7 @@ class PostDao implements IPostDao {
     /**
      *
      */
-    public getAllComments(): Promise<any> {
+    public getAllPageComments(): Promise<any> {
          // TODO
         return Promise.resolve([]);
     }
