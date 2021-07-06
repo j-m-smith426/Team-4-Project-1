@@ -18,7 +18,7 @@ class UserDao implements IUserDao {
     public async getAll() {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "begins_with(TYPEID, :utag)",
+            FilterExpression: "begins_with(TYPEID, :utag)",
             ExpressionAttributeValues: {
                 ":utag": "U#"
               }

@@ -18,9 +18,9 @@ class AnimeDao implements IAnimeDao {
     public async getAll() {
         const params = {
             TableName: TABLE,
-            KeyConditionExpression: "begins_with(TYPEID, :atag)",
+            FilterExpression: "begins_with(TYPEID, :atag)",
             ExpressionAttributeValues: {
-                ":utag": "A#"
+                ":atag": "A#"
               }
         };
         try {

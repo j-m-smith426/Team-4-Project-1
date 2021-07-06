@@ -4,6 +4,7 @@ import path from 'path';
 import helmet from 'helmet';
 
 import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 import StatusCodes from 'http-status-codes';
 import 'express-async-errors';
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
+app.use(cors());
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
