@@ -5,7 +5,7 @@ import { IAnime } from '@entities/Anime';
 
 export interface IAnimeDao {
     //getOne: (email: string) => Promise<IAnime | null>;
-    getAll: () => any;
+    getAll: () => Promise<any>;
     add: (anime: IAnime) => Promise<void>;
     //update: (user: IAnime) => Promise<void>;
     //delete: (id: string) => Promise<void>;

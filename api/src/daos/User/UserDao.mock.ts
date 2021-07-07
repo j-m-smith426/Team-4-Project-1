@@ -26,6 +26,7 @@ class UserDao implements IUserDao {
     try {
       const data = await ddbDoc.send(new GetCommand(params));
 
+
       return data.Item as IUser;
     } catch (err) {
       console.log("Error", err);

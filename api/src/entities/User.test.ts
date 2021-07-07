@@ -14,7 +14,7 @@ function createUser(){
 
     test(`Make new user with typeid:U#${id}, email: ${email},Reference: 0, and username:${name}`,() => {
         let newUser:User = new User(id,email,name);
-
+        
         expect(newUser).toEqual(result);
     })
 
