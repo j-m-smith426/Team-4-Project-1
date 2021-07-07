@@ -2,7 +2,7 @@
 import { getRandomInt } from '@shared/functions';
 import { IAnimeDao } from './AnimeDao';
 import { DeleteCommand, GetCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { ddbDoc } from '@daos/DB/Dynamo';
+import { ddbDoc } from '../DB/Dynamo';
 import { IAnime } from '@entities/Anime';
 
 
