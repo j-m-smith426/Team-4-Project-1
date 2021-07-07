@@ -18,3 +18,11 @@ async function addGet() {
   });
 }
 addGet();
+
+async function getAllUsers(){
+  test('Testing to retrieve all users', async () => {
+    const user = new UserDao();
+    expect(user.getAll()).toBeDefined();
+  })
+}
+getAllUsers();
