@@ -6,6 +6,7 @@ declare module 'express' {
     export interface Request  {
         body: {
             user: IUser,
+            Page:string,
             anime: IAnime,
             comment: IComment,
         };
