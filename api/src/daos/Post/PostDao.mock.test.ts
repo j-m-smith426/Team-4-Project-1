@@ -7,11 +7,13 @@ describe("Get All Page comments", () => {
   let user1: IComment = {
     TYPEID: "U#" + id,
     content: "This is a post",
+    image:'',
     REFERENCE: ref,
   };
   let user2: IComment = {
     TYPEID: "U#" + id + "2",
     content: "This is a post",
+    image:'',
     REFERENCE: ref,
   };
   it("should add a comment and retrieve it", async () => {
@@ -30,16 +32,19 @@ describe("get all post comments", () => {
     let user1: IComment = {
       TYPEID: "U#" + id,
       content: "This is a post",
+      image:'',
       REFERENCE: "test#C#001#" + ref,
     };
     let user2: IComment = {
       TYPEID: "U#" + id,
       content: "This is a post",
+      image:'',
       REFERENCE: "test#P#" + ref + "#0",
     };
     let user3: IComment = {
       TYPEID: "U#" + id,
       content: "This is a post",
+      image:'',
       REFERENCE: "test#C#" + ref + "#123",
     };
     const post = new PostDao();
@@ -56,6 +61,7 @@ describe("getOneComment", () => {
   let user1: IComment = {
     TYPEID: "U#" + id,
     content: "This is a post",
+    image:'',
     REFERENCE: "test#P#" + ref,
   };
   it("should retrieve the comment based on id", async () => {

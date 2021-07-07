@@ -6,11 +6,12 @@ describe("The post entity should do the following", () =>{
     let user1:IComment = {
         TYPEID:'U#'+id,
         content:'This is a post',
+        image:'',
         REFERENCE: ref
 
     };
     it('should create a Post with TYPEID:U#testID, content: This is a post, and REFERENCE: test#P#001', () => {
-        let newPost:Comment = new Comment('U#'+id,'This is a post', ref);
+        let newPost:Comment = new Comment('U#'+id,'This is a post','', ref);
         expect(newPost).toEqual(user1);
     })
 
@@ -20,11 +21,12 @@ describe("The post entity should do the following", () =>{
     let bad:IComment = {
         TYPEID:'#',
         content:'This is a post',
+        image:'',
         REFERENCE: ref
 
     };
     it('should recognize a bad post formatted incorrectly', () => {
-        let newPost:Comment = new Comment(id,'This is a post', ref);
+        let newPost:Comment = new Comment(id,'This is a post','', ref);
         expect(Comment.normalize(newPost)).toEqual(bad);
     });
 });
