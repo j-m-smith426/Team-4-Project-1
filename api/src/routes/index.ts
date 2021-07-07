@@ -1,6 +1,6 @@
 import { Router } from 'express';
 //import { getAllUsers, addOneUser, updateOneUser, deleteOneUser } from './Users';
-import { getAllUsers, addOneUser } from './Users';
+import { getAllUsers, addOneUser, getOneUser } from './Users';
 import { getAllAnime, addOneAnime } from './Anime';
 import { addOneComment, getAllPageComments, getAllPostComments } from './Post';
 
@@ -8,6 +8,7 @@ import { addOneComment, getAllPageComments, getAllPostComments } from './Post';
 // User-route
 const userRouter = Router();
 userRouter.get('/all', getAllUsers);
+userRouter.get('/:user', getOneUser);
 userRouter.post('/add', addOneUser);
 //userRouter.put('/update', updateOneUser);
 //userRouter.delete('/delete/:id', deleteOneUser);

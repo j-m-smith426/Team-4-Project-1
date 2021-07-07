@@ -10,8 +10,7 @@ async function addGet(){
         let testUser:IUser = {
             TYPEID:'U#'+id,
             REFERENCE:"0",
-            email,
-            username:name
+            email
         };
             const user = new UserDao();
         await user.add(testUser);

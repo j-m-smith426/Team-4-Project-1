@@ -1,7 +1,6 @@
 export interface IUser {
     TYPEID: string;
     REFERENCE: string;
-    username: string;
     email: string;
     
 }
@@ -9,11 +8,9 @@ export interface IUser {
 class User implements IUser {
 
     public TYPEID: string;
-    public username: string;
     public email: string;
     public REFERENCE: string;
-    constructor(id: string, email: string, name: string) {
-            this.username = name;
+    constructor(id: string, email: string) {
             this.email = email;
             if(id.startsWith("U#")){
                 this.TYPEID = id;
@@ -25,8 +22,9 @@ class User implements IUser {
             this.REFERENCE = "0";
 
     }
-    
+    //normalize data so it can be submitted without problem.
     static normalize(u : IUser) {
+        u.REFERENCE = "0"; 
         if(u.TYPEID.startsWith("U#")){
             return u;
         } else if (u.TYPEID.includes("#")) {
@@ -34,7 +32,6 @@ class User implements IUser {
         } else {
             u.TYPEID = "U#" + u.TYPEID;
         }
-        u.REFERENCE = "0"; 
         return u;
     }
     

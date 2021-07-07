@@ -22,8 +22,6 @@ class UserDao implements IUserDao {
         };
         try {
             const data = await ddbDoc.send(new GetCommand(params));
-        
-           
             return data.Item as IUser;
           } catch (err) {
             console.log("Error", err);
@@ -36,10 +34,14 @@ class UserDao implements IUserDao {
     public async getAll() {
         const params = {
             TableName: TABLE,
-            FilterExpression: "begins_with(TYPEID, :utag)",
+            FilterExpression: "begins_with(TYPEID, :utag) and #r = :zero",
+            ExpressionAttributeNames:{
+                "#r": "REFERENCE"
+            },
             ExpressionAttributeValues: {
-                ":utag": "U#"
-              }
+                ":utag": "U#",
+                ":zero": "0"
+            }
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
@@ -53,7 +55,7 @@ class UserDao implements IUserDao {
     public async add(user: IUser): Promise<void> {
        
         const params = {
-            TableName: this.table,
+            TableName: TABLE,
             Item: user
         }
         await ddbDoc.send(new PutCommand(params));

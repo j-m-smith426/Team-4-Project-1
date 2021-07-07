@@ -18,10 +18,14 @@ class AnimeDao implements IAnimeDao {
     public async getAll() {
         const params = {
             TableName: TABLE,
-            FilterExpression: "begins_with(TYPEID, :atag)",
+            FilterExpression: "begins_with(TYPEID, :atag) and #r = :zero",
+            ExpressionAttributeNames:{
+                "#r": "REFERENCE"
+            },
             ExpressionAttributeValues: {
-                ":atag": "A#"
-              }
+                ":atag": "A#",
+                ":zero": "0"
+            }
         };
         try {
             const data = await ddbDoc.send(new ScanCommand(params));
@@ -31,7 +35,6 @@ class AnimeDao implements IAnimeDao {
             console.log("Error", err);
         }
     }
-
 
     public async add(anime: IAnime): Promise<void> {
         console.log(anime);
