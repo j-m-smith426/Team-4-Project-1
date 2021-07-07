@@ -61,6 +61,13 @@ export async function addOneUser(req: Request, res: Response) {
     return res.status(CREATED).end();
 }
 
+export async function addUserToFollow(req:Request, res:Response){
+    let {user,Page} = req.body;
+    user = User.normalize(user);
+    userDao.addFollowed(user.TYPEID, Page);
+
+}
+
 
 /**
  * Update one user.

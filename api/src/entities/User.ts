@@ -2,6 +2,7 @@ export interface IUser {
     TYPEID: string;
     REFERENCE: string;
     email: string;
+    followed:string[]
     
 }
 
@@ -10,6 +11,7 @@ class User implements IUser {
     public TYPEID: string;
     public email: string;
     public REFERENCE: string;
+    public followed:string[] = [];
     constructor(id: string, email: string) {
             this.email = email;
             if(id.startsWith("U#")){

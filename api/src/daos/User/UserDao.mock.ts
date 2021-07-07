@@ -1,25 +1,30 @@
-import User, { IUser } from '@entities/User';
-import { getRandomInt } from '@shared/functions';
-import { IUserDao } from './UserDao';
-import MockDaoMock from '../MockDb/MockDao.mock';
-import { DeleteCommand, GetCommand, PutCommand, QueryCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { ddbDoc } from '../DB/Dynamo';
-
-
+import User, { IUser } from "@entities/User";
+import { getRandomInt } from "@shared/functions";
+import { IUserDao } from "./UserDao";
+import MockDaoMock from "../MockDb/MockDao.mock";
+import {
+  DeleteCommand,
+  GetCommand,
+  PutCommand,
+  QueryCommand,
+  ScanCommand,
+} from "@aws-sdk/lib-dynamodb";
+import { ddbDoc } from "../DB/Dynamo";
 
 const TABLE = "Scouter";
 class UserDao implements IUserDao {
-    public table = TABLE;
+  public table = TABLE;
 
-    public async getOne(username: string): Promise<IUser | null> {
-
-        const params = {
-            TableName: TABLE,
-            Key:{
-                TYPEID:'U#'+username,
-                REFERENCE:"0",
-            },
-        };
+  public async getOne(username: string): Promise<IUser | null> {
+    const params = {
+      TableName: TABLE,
+      Key: {
+        TYPEID: "U#" + username,
+        REFERENCE: "0",
+      },
+    };
+    try {
+      const data = await ddbDoc.send(new GetCommand(params));
         try {
             const data = await ddbDoc.send(new GetCommand(params));
             return data.Item as IUser;
@@ -27,9 +32,13 @@ class UserDao implements IUserDao {
             console.log("Error", err);
           }
 
-        return null;
+      return data.Item as IUser;
+    } catch (err) {
+      console.log("Error", err);
     }
 
+    return null;
+  }
 
     public async getAll() {
         const params = {
@@ -49,20 +58,23 @@ class UserDao implements IUserDao {
         } catch (err) {
             console.log("Error", err);
         }
-    }
+  }
 
+  public async add(user: IUser): Promise<void> {
+    const params = {
+      TableName: this.table,
+      Item: user,
+    };
+    await ddbDoc.send(new PutCommand(params));
+  }
 
-    public async add(user: IUser): Promise<void> {
-       
-        const params = {
-            TableName: TABLE,
-            Item: user
-        }
-        await ddbDoc.send(new PutCommand(params));
-    }
+  public async addFollowed(requester:string, userToFollow:string){
+      let user1:IUser = await this.getOne(requester) as IUser;
+      user1.followed.push(userToFollow);
+      await this.add(user1);
+  }
 
-
-    /*public async update(user: IUser): Promise<void> {
+  /*public async update(user: IUser): Promise<void> {
         const db = await super.openDb();
         for (let i = 0; i < db.users.length; i++) {
             if (db.users[i].id === user.id) {
