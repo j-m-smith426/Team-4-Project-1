@@ -8,8 +8,8 @@ function createUser(){
         TYPEID:'U#'+id,
         REFERENCE:"0",
         email,
-        username:name
-
+        username:name,
+        followed:[]
     };
 
     test(`Make new user with typeid:U#${id}, email: ${email},Reference: 0, and username:${name}`,() => {

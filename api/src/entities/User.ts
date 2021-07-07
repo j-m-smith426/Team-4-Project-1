@@ -3,6 +3,7 @@ export interface IUser {
     REFERENCE: string;
     username: string;
     email: string;
+    followed:string[]
     
 }
 
@@ -12,6 +13,7 @@ class User implements IUser {
     public username: string;
     public email: string;
     public REFERENCE: string;
+    public followed:string[] = [];
     constructor(id: string, email: string, name: string) {
             this.username = name;
             this.email = email;

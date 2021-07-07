@@ -59,6 +59,12 @@ class UserDao implements IUserDao {
     await ddbDoc.send(new PutCommand(params));
   }
 
+  public async addFollowed(requester:string, userToFollow:string){
+      let user1:IUser = await this.getOne(requester) as IUser;
+      user1.followed.push(userToFollow);
+      await this.add(user1);
+  }
+
   /*public async update(user: IUser): Promise<void> {
         const db = await super.openDb();
         for (let i = 0; i < db.users.length; i++) {
