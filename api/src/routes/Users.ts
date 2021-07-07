@@ -9,6 +9,23 @@ const userDao = new UserDao();
 const { BAD_REQUEST, CREATED, OK } = StatusCodes;
 
 
+/**
+ * Get all users.
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+ export async function getOneUser(req: Request, res: Response) {
+    const user = req.params.user;
+    if (!user) {
+        return res.status(BAD_REQUEST).json({
+            error: paramMissingError,
+        });
+    }
+    const users = await userDao.getOne(user);
+    return res.status(OK).json({users});
+}
 
 /**
  * Get all users.

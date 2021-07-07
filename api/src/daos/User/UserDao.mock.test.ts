@@ -9,8 +9,7 @@ async function addGet() {
     let testUser: IUser = {
       TYPEID: "U#" + id,
       REFERENCE: "0",
-      email,
-      username: name,
+      email
     };
     const user = new UserDao();
     await user.add(testUser);
@@ -18,3 +17,11 @@ async function addGet() {
   });
 }
 addGet();
+
+async function getAllUsers(){
+  test('Testing to retrieve all users', async () => {
+    const user = new UserDao();
+    expect(user.getAll()).toBeDefined();
+  })
+}
+getAllUsers();

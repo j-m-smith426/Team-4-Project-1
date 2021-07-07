@@ -25,7 +25,12 @@ class UserDao implements IUserDao {
     };
     try {
       const data = await ddbDoc.send(new GetCommand(params));
-
+        try {
+            const data = await ddbDoc.send(new GetCommand(params));
+            return data.Item as IUser;
+          } catch (err) {
+            console.log("Error", err);
+          }
 
       return data.Item as IUser;
     } catch (err) {
@@ -35,20 +40,24 @@ class UserDao implements IUserDao {
     return null;
   }
 
-  public async getAll() {
-    const params = {
-      TableName: TABLE,
-      KeyConditionExpression: "begins_with(TYPEID, :utag)",
-      ExpressionAttributeValues: {
-        ":utag": "U#",
-      },
-    };
-    try {
-      const data = await ddbDoc.send(new ScanCommand(params));
-      return Promise.resolve(data.Items);
-    } catch (err) {
-      console.log("Error", err);
-    }
+    public async getAll() {
+        const params = {
+            TableName: TABLE,
+            FilterExpression: "begins_with(TYPEID, :utag) and #r = :zero",
+            ExpressionAttributeNames:{
+                "#r": "REFERENCE"
+            },
+            ExpressionAttributeValues: {
+                ":utag": "U#",
+                ":zero": "0"
+            }
+        };
+        try {
+            const data = await ddbDoc.send(new ScanCommand(params));
+            return Promise.resolve(data.Items);
+        } catch (err) {
+            console.log("Error", err);
+        }
   }
 
   public async add(user: IUser): Promise<void> {
