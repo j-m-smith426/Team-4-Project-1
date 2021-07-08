@@ -17,7 +17,7 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @returns 
  */
  export async function getOneUser(req: Request, res: Response) {
-    const user = req.params.user;
+    const {user} = req.params;
     if (!user) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
