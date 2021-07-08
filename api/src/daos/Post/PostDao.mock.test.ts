@@ -72,3 +72,12 @@ describe("getOneComment", () => {
     expect(returned).toStrictEqual(user1);
   });
 });
+
+describe("getAllComments", () => {
+  let id: any = jest.fn().mockName('something');
+  it("should retrieve all comments", () => {
+    const post = new PostDao();
+    const func = post.getAllUserComments(id);
+    expect(func).toBeDefined();
+  })
+})

@@ -59,23 +59,44 @@ class PostDao implements IPostDao {
       console.log("Error", err);
     }
   }
+  public async getAllUserComments(subjectID: string) {
+    const params = {
+      TableName: TABLE,
+      FilterExpression:
+        "contains(#ref,:subject)",
+      ExpressionAttributeNames: {
+        "#ref": "REFERENCE",
+      },
+      ExpressionAttributeValues: {
+        ":subject": subjectID + "#P#",
+        
+      },
+    };
+    try {
+      const data = await ddbDoc.send(new ScanCommand(params));
+      console.log(data.Items);
+      return data.Items as IComment[];
+    } catch (err) {
+      console.log("Error", err);
+    }
+  }
 
   public async getAllPageComments(subjectID: string) {
     const params = {
       TableName: TABLE,
       FilterExpression:
-        "TYPEID = :subject AND (contains(#ref,:p) OR contains(#ref, :c))",
+        "contains(TYPEID, :subject) AND contains(#ref,:p)",
       ExpressionAttributeNames: {
         "#ref": "REFERENCE",
       },
       ExpressionAttributeValues: {
         ":subject": subjectID,
         ":p": "#P#",
-        ":c": "#C#",
       },
     };
     try {
       const data = await ddbDoc.send(new ScanCommand(params));
+      console.log(data.Items);
       return data.Items as IComment[];
     } catch (err) {
       console.log("Error", err);
@@ -87,6 +108,7 @@ class PostDao implements IPostDao {
       TableName: this.table,
       Item: post,
     };
+    console.log(params);
     await ddbDoc.send(new PutCommand(params));
   }
 
