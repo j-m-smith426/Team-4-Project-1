@@ -61,6 +61,27 @@ class AnimeDao implements IAnimeDao {
         await ddbDoc.send(new PutCommand(params));
     }
 
+    public async getSome(name:string){
+        const params = {
+            TableName: TABLE,
+            FilterExpression:
+              "contains(TYPEID, :subject) AND #ref=:p",
+            ExpressionAttributeNames: {
+              "#ref": "REFERENCE",
+            },
+            ExpressionAttributeValues: {
+              ":subject": name,
+              ":p":'0'
+            },
+          };
+          try {
+            const data = await ddbDoc.send(new ScanCommand(params));
+            console.log(data.Items);
+            return Promise.resolve(data.Items);
+          } catch (err) {
+            console.log("Error", err);
+          }
+        }
 
     /*public async update(anime: IAnime): Promise<void> {
         const db = await super.openDb();

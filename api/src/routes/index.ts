@@ -1,7 +1,7 @@
 import { Router } from 'express';
 //import { getAllUsers, addOneUser, updateOneUser, deleteOneUser } from './Users';
 import { getAllUsers, addOneUser, getOneUser, addUserToFollow  } from './Users';
-import { getAllAnime, addOneAnime, getOneAnime } from './Anime';
+import { getAllAnime, addOneAnime, getOneAnime, getSOmeAnime } from './Anime';
 import { addOneComment, getAllPageComments, getAllPostComments, getAllUserComments } from './Post';
 
 
@@ -16,7 +16,8 @@ userRouter.post('/update', addUserToFollow);
 const animeRouter = Router();
 animeRouter.get('/all', getAllAnime);
 animeRouter.post('/add', addOneAnime);
-animeRouter.get('/:subject', getOneAnime)
+animeRouter.get('/:subject', getOneAnime);
+animeRouter.get('/search/:subject', getSOmeAnime);
 
 // Post-comment
 const postRouter = Router();
