@@ -92,7 +92,6 @@ class PostDao implements IPostDao {
       ExpressionAttributeValues: {
         ":subject": subjectID,
         ":p": "#P#",
-        ":c": "#C#",
       },
     };
     try {
