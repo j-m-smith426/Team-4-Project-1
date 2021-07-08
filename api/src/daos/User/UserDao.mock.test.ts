@@ -6,10 +6,12 @@ async function addGet() {
     let id = "testId";
     let email = "testEmail@mail.com";
     let name = "test";
+    let followed: string[];
     let testUser: IUser = {
       TYPEID: "U#" + id,
       REFERENCE: "0",
-      email
+      email,
+      followed: [],
     };
     const user = new UserDao();
     await user.add(testUser);
