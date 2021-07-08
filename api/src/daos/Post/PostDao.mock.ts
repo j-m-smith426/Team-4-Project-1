@@ -54,7 +54,7 @@ class PostDao implements IPostDao {
     try {
       const data = await ddbDoc.send(new ScanCommand(params));
 
-      return data.Items && (data.Items as IComment[]);
+      return data.Items && (data.Items?.sort((a,b) => a.timeStamp < b.timeStamp ? 1 : -1) as IComment[]);
     } catch (err) {
       console.log("Error", err);
     }
@@ -75,7 +75,7 @@ class PostDao implements IPostDao {
     try {
       const data = await ddbDoc.send(new ScanCommand(params));
       console.log(data.Items);
-      return data.Items as IComment[];
+      return data.Items?.sort((a,b) => a.timeStamp < b.timeStamp ? 1 : -1) as IComment[];
     } catch (err) {
       console.log("Error", err);
     }
@@ -97,7 +97,7 @@ class PostDao implements IPostDao {
     try {
       const data = await ddbDoc.send(new ScanCommand(params));
       console.log(data.Items);
-      return data.Items as IComment[];
+      return data.Items?.sort((a,b) => a.timeStamp < b.timeStamp ? 1 : -1) as IComment[];
     } catch (err) {
       console.log("Error", err);
     }
