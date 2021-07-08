@@ -15,6 +15,20 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @param res
  * @returns
  */
+
+export async function getAllUserComments(req: Request, res: Response) {
+  const { subject } = req.params;
+
+  if (!subject) {
+    return res.status(BAD_REQUEST).json({
+      error: paramMissingError,
+    });
+  }
+  const users = await postDao.getAllUserComments(subject);
+  return res.status(OK).json({ users });
+}
+
+
 export async function getAllPageComments(req: Request, res: Response) {
   const { subject } = req.params;
 
@@ -53,8 +67,9 @@ export async function getAllPostComments(req: Request, res: Response) {
  */
 export async function addOneComment(req: Request, res: Response) {
   let { comment } = req.body;
-
+  
   comment = Comment.normalize(comment);
+  
   if (!comment || comment.TYPEID === "#") {
     return res.status(BAD_REQUEST).json({
       error: badIDError,
