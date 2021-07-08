@@ -55,3 +55,29 @@ function checkUserId(){
 
 }
 checkUserId();
+
+function normalizeId(){
+    let id = 'U#stuff';
+    let use: IUser = {
+        TYPEID: 'U#stuff',
+        REFERENCE:"0",
+        email: "anything@rocketmail.com",
+        followed: [],
+    };
+    test('Normalize typeid if it starts with U#', () => {
+        let normal = User.normalize(use);
+        expect(normal.TYPEID).toBe(id);
+    });
+    test('Normalize typeid to be #', () => {
+        use.TYPEID = '#blah'; 
+        let normal = User.normalize(use);
+        expect(normal.TYPEID).toBe('#');
+    });
+    test('Normalize typeid to include U# if not already present', () => {
+        use.TYPEID = 'tonkatsu';
+        let uid = 'U#' + use.TYPEID;
+        let normal = User.normalize(use);
+        expect(normal.TYPEID).toBe(uid);
+    })
+}
+normalizeId();
