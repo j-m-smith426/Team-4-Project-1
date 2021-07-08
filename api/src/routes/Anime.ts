@@ -19,6 +19,12 @@ export async function getAllAnime(req: Request, res: Response) {
   return res.status(OK).json({ anime });
 }
 
+export async function getSOmeAnime(req:Request, res:Response){
+  let {subject} = req.params;
+  const anime = await animeDao.getSome(subject);
+  return res.status(OK).json({ anime });
+}
+
 /**
  * Add one user.
  *
