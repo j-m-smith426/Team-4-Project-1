@@ -3,6 +3,7 @@ export interface IComment {
     content: string;
     image:string;
     REFERENCE: string;
+    timeStamp:Date;
     
 }
 
@@ -12,6 +13,7 @@ class Comment implements IComment {
     public content: string;
     public REFERENCE: string;
     public image:string;
+    public timeStamp:Date = new Date();
     constructor(id: string, content: string,image:string, parent: string) {
         if(id.startsWith("U#") || id.startsWith("A#")){
             this.TYPEID = id;
