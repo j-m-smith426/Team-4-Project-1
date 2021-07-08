@@ -40,6 +40,21 @@ export async function addOneAnime(req: Request, res: Response) {
   return res.status(CREATED).end();
 }
 
+
+
+export async function getOneAnime(req: Request, res: Response) {
+  
+  let { subject } = req.params;
+  if (!subject ) {
+    return res.status(BAD_REQUEST).json({
+      error: badIDError,
+    });
+  }
+  let anime = await animeDao.getOne(subject)
+  console.log(anime);
+  return res.status(OK).json(anime);
+}
+
 /**
  * Update one user.
  *

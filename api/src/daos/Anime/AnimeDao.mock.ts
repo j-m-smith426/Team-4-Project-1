@@ -22,7 +22,7 @@ class AnimeDao implements IAnimeDao {
         try {
             const data = await ddbDoc.send(new GetCommand(params));
         
-           
+           console.log(data.Item);
             return data.Item as IAnime;
           } catch (err) {
             console.log("Error", err);

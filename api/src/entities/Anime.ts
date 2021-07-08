@@ -2,7 +2,9 @@ export interface IAnime {
     TYPEID: string;
     REFERENCE: string;
     name: string;
+    description:string;
     genres: string[];
+    image:string;
     
 }
 
@@ -11,8 +13,10 @@ class Anime implements IAnime {
     public TYPEID: string;
     public name: string;
     public genres: string[];
+    public description:string = 'Empty Description';
     public REFERENCE: string = "0";
-    constructor(id: string, name: string, genres: string[]) {
+    public image:string =''
+    constructor(id: string, name: string, genres: string[], ) {
         if(id.startsWith("A#")){
             this.TYPEID = id;
         } else if (id.includes("#")) {
