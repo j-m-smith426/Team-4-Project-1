@@ -67,13 +67,14 @@ class AnimeDao implements IAnimeDao {
         const params = {
             TableName: TABLE,
             FilterExpression:
-              "contains(TYPEID, :subject) AND #ref=:p",
+              "contains(TYPEID, :subject) AND #ref=:p AND begins_with(TYPEID, :atag)",
             ExpressionAttributeNames: {
               "#ref": "REFERENCE",
             },
             ExpressionAttributeValues: {
               ":subject": name,
-              ":p":'0'
+              ":p":'0',
+              ":atag": "A#"
             },
           };
           try {
