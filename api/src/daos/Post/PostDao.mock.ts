@@ -13,7 +13,7 @@ import { ddbDoc } from "../DB/Dynamo";
 const TABLE = "Scouter";
 class PostDao implements IPostDao {
   public table = TABLE;
-
+  //retrieves a post by id
   public async getOne(postID: string) {
     const params = {
       TableName: TABLE,
@@ -35,7 +35,7 @@ class PostDao implements IPostDao {
       console.log("Error", err);
     }
   }
-
+  //retrieves all posts 
   public async getAllPostComments(postID: string) {
     const params = {
       TableName: TABLE,
@@ -59,6 +59,8 @@ class PostDao implements IPostDao {
       console.log("Error", err);
     }
   }
+
+  //retrieve all usernames
   public async getAllUserComments(subjectID: string) {
     const params = {
       TableName: TABLE,
@@ -80,7 +82,7 @@ class PostDao implements IPostDao {
       console.log("Error", err);
     }
   }
-
+  //retrieves page comments by the page specifically by anime or userpage
   public async getAllPageComments(subjectID: string) {
     const params = {
       TableName: TABLE,
@@ -102,7 +104,7 @@ class PostDao implements IPostDao {
       console.log("Error", err);
     }
   }
-
+  //post a comment on a page
   public async addComment(post: IComment): Promise<void> {
     const params = {
       TableName: this.table,

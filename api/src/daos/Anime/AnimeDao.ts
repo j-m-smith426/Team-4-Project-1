@@ -1,6 +1,6 @@
 import { IAnime } from '@entities/Anime';
 
-
+//! The Mock Dao files are our main Daos with definition
 
 
 export interface IAnimeDao {

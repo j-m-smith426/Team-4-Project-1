@@ -11,10 +11,7 @@ async function addGet() {
       TYPEID: "U#" + id,
       REFERENCE: "0",
       email,
-<<<<<<< HEAD
-=======
       followed: [],
->>>>>>> f6ddbd926e6b17a256a585ed4dffe47b699c72be
     };
     const user = new UserDao();
     await user.add(testUser);

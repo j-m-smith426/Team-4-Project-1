@@ -8,6 +8,8 @@ export interface IAnime {
     
 }
 
+//! Genre will be implemented in the next sprint
+
 class Anime implements IAnime {
 
     public TYPEID: string;

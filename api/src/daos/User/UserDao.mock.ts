@@ -68,6 +68,7 @@ class UserDao implements IUserDao {
     await ddbDoc.send(new PutCommand(params));
   }
 
+  //! In a future sprint, we will attempt to add followers
   public async addFollowed(requester:string, userToFollow:string){
       let user1:IUser = await this.getOne(requester) as IUser;
       user1.followed.push(userToFollow);

@@ -10,6 +10,7 @@ const TABLE = "Scouter";
 class AnimeDao implements IAnimeDao {
     public table = TABLE;
 
+    //retrieves one anime title name
     public async getOne(name: string): Promise<IAnime| null> {
 
         const params = {
@@ -31,6 +32,7 @@ class AnimeDao implements IAnimeDao {
         return null;
     }
 
+    //retrieves all anime titles in the db
     public async getAll() {
         const params = {
             TableName: TABLE,
@@ -51,7 +53,7 @@ class AnimeDao implements IAnimeDao {
             console.log("Error", err);
         }
     }
-
+    // adds anime given correct parameters to db 
     public async add(anime: IAnime): Promise<void> {
         console.log(anime);
         const params = {

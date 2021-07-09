@@ -5,7 +5,7 @@ export interface IUser {
     followed:string[]
     
 }
-
+//! Followed will be in future implementation
 class User implements IUser {
 
     public TYPEID: string;

@@ -1,5 +1,4 @@
 import { Router } from 'express';
-//import { getAllUsers, addOneUser, updateOneUser, deleteOneUser } from './Users';
 import { getAllUsers, addOneUser, getOneUser, addUserToFollow  } from './Users';
 import { getAllAnime, addOneAnime, getOneAnime, getSOmeAnime } from './Anime';
 import { addOneComment, getAllPageComments, getAllPostComments, getAllUserComments } from './Post';
@@ -11,8 +10,12 @@ userRouter.get('/all', getAllUsers);
 userRouter.get('/:user', getOneUser);
 userRouter.post('/add', addOneUser);
 userRouter.post('/update', addUserToFollow);
+
+//! Removed update and delete requests from user for secruity purposes
 //userRouter.put('/update', updateOneUser);
 //userRouter.delete('/delete/:id', deleteOneUser);
+
+// Anime Router
 const animeRouter = Router();
 animeRouter.get('/all', getAllAnime);
 animeRouter.post('/add', addOneAnime);
