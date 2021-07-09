@@ -4,7 +4,7 @@ Backend API Express App
 ## Test Coverage      
 File                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 --------------------------|---------|----------|---------|---------|-------------------
-All files                 |   82.61 |     77.5 |      80 |   83.93 |                   
+All files                 |   79.56 |     77.5 |   79.17 |    80.6 |                   
  api                      |     100 |      100 |     100 |     100 |                   
   jest-dynalite-config.js |     100 |      100 |     100 |     100 |                   
  api/src/daos/Anime       |    62.5 |      100 |      75 |    62.5 |                   
@@ -13,7 +13,9 @@ All files                 |   82.61 |     77.5 |      80 |   83.93 |
   Dynamo.ts               |     100 |       75 |     100 |     100 | 30                     
  api/src/daos/Post        |      80 |       50 |      75 |   85.19 |                        
   PostDao.mock.ts         |      80 |       50 |      75 |   85.19 | 35,59,80,102           
- api/src/entities         |     100 |    93.75 |     100 |     100 |                        
+ api/src/daos/User        |   63.64 |      100 |      75 |   63.64 |                        
+  UserDao.mock.ts         |   63.64 |      100 |      75 |   63.64 | 32-40,59,72-74         
+ api/src/entities         |     100 |    93.75 |     100 |     100 |                   
   Post.ts                 |     100 |     87.5 |     100 |     100 | 29                     
   User.ts                 |     100 |      100 |     100 |     100 |                        
  api/src/routes           |   78.26 |       80 |      75 |   78.26 |                        
