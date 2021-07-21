@@ -63,7 +63,3 @@ Scouter Developers:
 * Nick Wang 
 * Matthew Hanrahan 
 * Imran Ilyas
-
-## License
-
-This project uses the following license: [<license_name>](<link>).
