@@ -1,4 +1,4 @@
-# Scouter-FrontEnd
+# Scouter-Backend
 This is the Backend repository. Finish the **Getting Started** section before installing the [Frontend](https://github.com/j-m-smith426/Team-4-Project-1-FrontEnd).
 
 ## Project Description
@@ -8,7 +8,7 @@ Code Coverage: 80.6% Lines
 
 ## Technologies and Languages Used
 * NodeJS - 16.3.0
-* AWS V3 - DynamoDB
+* AWS V3: DynamoDB
 * Express - ^4.17.1
 * TypeScript - ^4.3.4
 
