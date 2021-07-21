@@ -31,7 +31,7 @@ To clone the repository, run the following command in your terminal:
 ```powershell
 git clone https://github.com/j-m-smith426/Team-4-Project-1.git
 ```
-Alternatively, if you have Github Desktop, you can click on 'Code' and 'Open with Github Desktop'.
+Alternatively, if you have Github Desktop, you can click on **Code** and **Open with Github Desktop**.
 Be sure [NodeJS](https://nodejs.org/en/download/) is installed as well as a text editor. We recommend [Visual Studio Code](https://code.visualstudio.com/download).
 
 To check if NodeJS and Node Package Manager installed correctly, run the following command:
@@ -44,13 +44,13 @@ Once installed, open up the root of the repository and install Scouter's depende
 ```powershell
 npm install
 ```
-This will read from the package.json and install all necessary dependencies, including React and TypeScript. At this point, the backend should be ready.
+This will read from the package.json and install all necessary dependencies, including Express and TypeScript. At this point, the backend should be ready.
 
 Now, you are ready to run the application. Open up the backend and run:
 ```powershell
 npm run start:dev
 ```
-In the future, when you have set up the frontend and are running the application, you will the requests being made in the console of the backend.
+In the future, when you have set up the frontend and are running the application, you may see the requests being made in the console of the backend.
 
 Use `Ctrl+C` to stop the server. Now, proceed to the [Scouter's Frontend](https://github.com/j-m-smith426/Team-4-Project-1-FrontEnd).
 
