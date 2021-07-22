@@ -60,8 +60,19 @@ The backend is used server-side. It is meant for communication with the frontend
 ### Anime
 * `GET` `localhost:3000/api/anime/all`
   * Returns all the anime information within the database
-* `GET` `localhost:3000/api/anime/:subject` - The `:subject` would need to be replaced with an anime name. For example: `localhost:3000/api/anime/Naruto`
+* `GET` `localhost:3000/api/anime/:subject` - The `:subject` would need to be replaced with an anime name. For example: `localhost:3000/api/anime/DragonBallZ`
   * Returns all of that specific anime's information
+  * Sample Output:
+```console
+"anime": [
+        {
+            "CoverImage": "A DragonBallZ/DBZ.jpg",
+            "description": "Dragon Ball Z follows the adventures of the adult Goku who...",
+            "image": "A DragonBallZ/DBZ.jpg",
+            "TYPEID": "A#DragonBallZ",
+            "REFERENCE": "0"
+        }
+```
 * `GET` `localhost:3000/api/anime/search/:subject` - This is how our search bar on the front end works. Replace `:subject` with anything. For example: `localhost:3000/api/anime/search/D`
   * Returns all matching anime information. With 'D', it will return Dragon Ball Z and Demon Slayer information.
 * `POST` `localhost:3000/api/anime/add` - Adds an anime to the database; requires a body:
@@ -80,12 +91,21 @@ The backend is used server-side. It is meant for communication with the frontend
   * Returns all users  
 * `GET` `localhost:3000/api/users/:user` - Replace `:user` with a valid username
   * Returns specific user's information
-*
+* `POST` `localhost:3000/api/users/add`
+  * Creates a user; requires body parameters 
 ### Post
+* `GET` `localhost:3000/api/Post/Anime/:subject`
+  * Returns all posts from an anime page
+* `GET` `localhost:3000/api/Post/User/:subject`
+  * Returns all posts connected to a user
+* `GET` `localhost:3000/api/Post/comments/:subject`
+  * Returns all comments depending on the inputted subject
+* `POST` `localhost:3000/api/Post/add`
+  * Adds an associated post; body parameters are required      
 
 ## Contributors
 Scouter Developers:
-* Joab Smith 
-* Nick Wang 
-* Matthew Hanrahan 
-* Imran Ilyas
+* [Joab Smith](https://github.com/j-m-smith426) 
+* [Nick Wang](https://github.com/nickwanguu) 
+* [Matthew Hanrahan](https://github.com/Thomas-Marik)
+* [Imran Ilyas](https://github.com/imranilyas)
