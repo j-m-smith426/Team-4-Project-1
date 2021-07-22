@@ -55,7 +55,33 @@ In the future, when you have set up the frontend and are running the application
 Use `Ctrl+C` to stop the server. Now, proceed to the [Scouter's Frontend](https://github.com/j-m-smith426/Team-4-Project-1-FrontEnd).
 
 ## Usage
-The backend is used server-side. It is meant for communication with the frontend. The user will not need to do any more than running the backend to handle requests on the frontend.
+The backend is used server-side. It is meant for communication with the frontend. The user will not need to do any more than running the backend to handle requests on the frontend. However, if you would like to test the functionality of handling requests, we recommend installing [Postman](https://www.postman.com/downloads/).
+
+### Anime
+* `GET` `localhost:3000/api/anime/all`
+  * Returns all the anime information within the database
+* `GET` `localhost:3000/api/anime/:subject` - The `:subject` would need to be replaced with an anime name. For example: `localhost:3000/api/anime/Naruto`
+  * Returns all of that specific anime's information
+* `GET` `localhost:3000/api/anime/search/:subject` - This is how our search bar on the front end works. Replace `:subject` with anything. For example: `localhost:3000/api/anime/search/D`
+  * Returns all matching anime information. With 'D', it will return Dragon Ball Z and Demon Slayer information.
+* `POST` `localhost:3000/api/anime/add` - Adds an anime to the database; requires a body:
+```console
+{
+    "anime": {
+      "TYPEID": "A#{insert value here}",
+      "name": "",
+      "REFERENCE": "0",
+      "description": ""
+    }
+}
+```
+### User
+* `GET` `localhost:3000/api/users/all`
+  * Returns all users  
+* `GET` `localhost:3000/api/users/:user` - Replace `:user` with a valid username
+  * Returns specific user's information
+*
+### Post
 
 ## Contributors
 Scouter Developers:
